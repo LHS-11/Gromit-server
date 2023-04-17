@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,7 +69,7 @@ class HomeControllerTest {
         //when
         willDoNothing().given(userAccountService).reloadCommits(any(UserAccount.class),any(LocalDate.class));
         given(userCharacterService.findByUserAccountId(any(UserAccount.class))).willReturn(userCharacter);
-        given(userCharacterService.reloadCharacter(any(UserAccount.class))).willReturn(showHomeResponse);
+        given(userCharacterService.reloadCharacter(any(UserAccount.class))).willReturn((Future<ShowHomeResponse>) showHomeResponse);
 
         mockMvc.perform(get("/home").with(user(userAccount)))
                 .andExpect(status().isOk())
@@ -104,7 +105,7 @@ class HomeControllerTest {
 
         //when
         willDoNothing().given(userAccountService).reloadCommits(any(UserAccount.class),any(LocalDate.class));
-        given(userCharacterService.reloadCharacter(any(UserAccount.class))).willReturn(showHomeResponse);
+        given(userCharacterService.reloadCharacter(any(UserAccount.class))).willReturn((Future<ShowHomeResponse>) showHomeResponse);
 
         mockMvc.perform(get("/home/reload").with(user(userAccount)))
                 .andExpect(status().isOk())

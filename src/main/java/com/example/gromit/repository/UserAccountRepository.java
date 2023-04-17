@@ -17,4 +17,6 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
     Optional<UserAccount> findByNicknameAndIsDeleted(String nickname, boolean isDeleted);
 
     List<UserAccount> findByIsDeleted(boolean isDeleted);
+
+    Optional<UserAccount> findByIdAndIsDeleted(Long id, boolean isDeleted);
 }
